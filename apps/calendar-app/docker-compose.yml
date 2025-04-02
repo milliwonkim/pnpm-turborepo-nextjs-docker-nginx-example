@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile.nextjs
+    container_name: nextjs-app
+    volumes:
+      - static-volume:/app/.next/static
+      - ./public:/app/public
+    networks:
+      - app-network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - nextjs
+    volumes:
+      - static-volume:/usr/share/nginx/html/_next/static
+      - ./public:/usr/share/nginx/html/public
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  static-volume:
