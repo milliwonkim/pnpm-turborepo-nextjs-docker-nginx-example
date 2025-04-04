@@ -9,11 +9,13 @@ RUN npm install -g pnpm
 # 루트 package.json, pnpm-lock.yaml, pnpm-workspace.yaml 복사
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# 전체 워크스페이스 의존성 설치 (Turborepo 캐싱 활용)
-RUN pnpm install --frozen-lockfile
-
-# 필요한 앱과 패키지 소스 코드 복사
+# 필요한 앱과 패키지 소스 코드 **먼저** 복사
+# 중요: .dockerignore 파일에 node_modules가 포함되어 있는지 확인하세요!
 COPY . .
+
+# 전체 워크스페이스 의존성 설치 (Turborepo 캐싱 활용)
+# COPY . . 이후에 실행하도록 순서 변경
+RUN pnpm install --frozen-lockfile
 
 # calendar-app 빌드 (Standalone output 활용)
 RUN pnpm --filter=calendar-app build
