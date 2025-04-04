@@ -20,6 +20,9 @@ importers:
 
   apps/calendar-app:
     dependencies:
+      '@tailwindcss/oxide-linux-arm64-musl':
+        specifier: ^4.1.2
+        version: 4.1.2
       next:
         specifier: 15.2.4
         version: 15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -455,6 +458,12 @@ packages:
 
   '@tailwindcss/oxide-linux-arm64-musl@4.0.17':
     resolution: {integrity: sha512-/FhWgZCdUGAeYHYnZKekiOC0aXFiBIoNCA0bwzkICiMYS5Rtx2KxFfMUXQVnl4uZRblG5ypt5vpPhVaXgGk80w==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@tailwindcss/oxide-linux-arm64-musl@4.1.2':
+    resolution: {integrity: sha512-k7G6vcRK/D+JOWqnKzKN/yQq1q4dCkI49fMoLcfs2pVcaUAXEqCP9NmA8Jv+XahBv5DtDjSAY3HJbjosEdKczg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2756,6 +2765,8 @@ snapshots:
 
   '@tailwindcss/oxide-linux-arm64-musl@4.0.17':
     optional: true
+
+  '@tailwindcss/oxide-linux-arm64-musl@4.1.2': {}
 
   '@tailwindcss/oxide-linux-x64-gnu@4.0.17':
     optional: true
