@@ -1,0 +1,48 @@
+name: Build calendar-app Docker Image
+
+on:
+  push:
+    branches: [main, test]
+    paths:
+      - "apps/calendar-app/**"
+      - "packages/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/deploy-ecr.yml"
+  pull_request: # Pull Request 시에도 빌드 확인
+    paths:
+      - "apps/calendar-app/**"
+      - "packages/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/deploy-ecr.yml"
+
+env:
+  IMAGE_NAME: calendar-app-build-test # 빌드 테스트용 이미지 이름
+
+jobs:
+  build-docker-image: # 잡 이름 변경
+    name: Build Docker Image # 잡 이름 변경
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18" # Dockerfile의 Node.js 버전과 일치
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # AWS 관련 스텝 제거
+
+      - name: Build Docker image # 스텝 이름 변경 및 내용 수정
+        run: |
+          echo "Building Docker image for testing..."
+          docker build -t $IMAGE_NAME:latest -f apps/calendar-app/Dockerfile .
+          echo "Docker image build successful."
